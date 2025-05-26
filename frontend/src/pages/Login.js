@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import { API_BASE_URL } from "../config";
 const Login = () => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let res = await fetch("/login", {
+    let res = await fetch(`${API_BASE_URL}/login`, {
       mode: "cors",
       method: "POST",
       headers: {

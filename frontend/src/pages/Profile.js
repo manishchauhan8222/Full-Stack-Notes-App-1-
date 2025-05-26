@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Note from "../components/Note";
 import Fotter from "../components/Fotter";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const Profile = () => {
   const [userDetails, setuserDetails] = useState(null);
@@ -13,7 +14,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   function getUserDetails() {
-    fetch("/getUserDetails", {
+    fetch(`${API_BASE_URL}/getUserDetails`, {
       mode: "cors",
       method: "POST",
       headers: {
@@ -29,22 +30,35 @@ const Profile = () => {
   }
 
   function getNotes() {
-    fetch("/getNotes", {
+    fetch(`${API_BASE_URL}/getNotes`, {
       mode: "cors",
       method: "POST",
       headers: {
-        "Applicatiosn-Type": "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ userId: localStorage.getItem("userID") }),
     })
       .then((res) => res.json())
       .then((data) => {
-        setNotes(data);
+        console.log("getNotes API response:", data);
 
-        setImportantNotes(data.filter((note) => note.isImportant));
-
-        setNormalNotes(data.filter((note) => note.isImportant == false));
+        // ✅ Check if request was successful and notes are present
+        if (data.success && Array.isArray(data.notes)) {
+          setNotes(data.notes);
+          setImportantNotes(data.notes.filter((note) => note.isImportant));
+          setNormalNotes(
+            data.notes.filter((note) => note.isImportant === false)
+          );
+        } else {
+          // ✅ Gracefully handle empty or failed response
+          setNotes([]);
+          setImportantNotes([]);
+          setNormalNotes([]);
+          console.warn("No notes found or API call failed");
+        }
+      })
+      .catch((err) => {
+        console.error("Failed to fetch notes:", err);
       });
   }
 

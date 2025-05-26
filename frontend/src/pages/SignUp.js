@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -14,7 +15,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let res = await fetch("/signUp", {
+    let res = await fetch(`${API_BASE_URL}/signUp`, {
       mode: "cors",
       method: "POST",
       headers: {

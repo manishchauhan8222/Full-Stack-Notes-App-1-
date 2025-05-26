@@ -5,6 +5,7 @@ import Fotter from "../components/Fotter";
 import Oops from "../components/Oops";
 import oopsImg from "../Images/oops2.png";
 import { useSearchParams } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -34,7 +35,7 @@ const SearchPage = () => {
   }, [data, myParam]);
 
   const getNotes = () => {
-    fetch("/getNotes", {
+    fetch(`${API_BASE_URL}/getNotes`, {
       mode: "cors",
       method: "POST",
       headers: {

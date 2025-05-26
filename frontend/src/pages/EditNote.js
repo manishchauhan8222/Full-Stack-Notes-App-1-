@@ -3,6 +3,7 @@ import JoditEditor from "jodit-react";
 import Navbar from "../components/Navbar";
 import CheckBox from "../tools/checkBox";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const EditNote = () => {
   let { id } = useParams();
@@ -17,7 +18,7 @@ const EditNote = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    fetch("/updateNote", {
+    fetch(`${API_BASE_URL}/updateNote`, {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,7 +43,7 @@ const EditNote = () => {
   };
 
   const getNote = useCallback(() => {
-    fetch("/getNote", {
+    fetch(`${API_BASE_URL}/getNote`, {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -5,6 +5,8 @@ import Fotter from "../components/Fotter";
 import Oops from "../components/Oops";
 import { useNavigate } from "react-router-dom";
 
+import { API_BASE_URL } from "../config";
+
 const Home = () => {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
@@ -14,7 +16,7 @@ const Home = () => {
   const [userData, setUserData] = useState(null);
 
   let getNotes = () => {
-    let res = fetch("/getNotes", {
+    let res = fetch(`${API_BASE_URL}/getNotes`, {
       mode: "cors",
       method: "POST",
       headers: {
@@ -36,7 +38,7 @@ const Home = () => {
   };
 
   function getUserDetails() {
-    fetch("/getUserDetails", {
+    fetch(`${API_BASE_URL}/getUserDetails`, {
       mode: "cors",
       method: "POST",
       headers: {

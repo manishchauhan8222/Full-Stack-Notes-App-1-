@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Fotter from "../components/Fotter";
 import { useNavigate, useParams } from "react-router-dom";
 import parse from "html-react-parser";
+import { API_BASE_URL } from "../config";
 
 const SingleNotePage = () => {
   let { id } = useParams();
@@ -12,7 +13,7 @@ const SingleNotePage = () => {
   const [isDelteModel, setIsDelteModel] = useState(false);
 
   function getNote() {
-    fetch("/getNote", {
+    fetch(`${API_BASE_URL}/getNote`, {
       mode: "cors",
       method: "POST",
       headers: {
@@ -34,7 +35,7 @@ const SingleNotePage = () => {
 
   const delteNote = (id) => {
     console.log("ID : ", id);
-    let res = fetch("/deleteNote", {
+    let res = fetch(`${API_BASE_URL}/deleteNote`, {
       mode: "cors",
       method: "POST",
       headers: {

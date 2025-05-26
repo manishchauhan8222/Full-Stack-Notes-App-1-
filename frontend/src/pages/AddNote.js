@@ -3,6 +3,7 @@ import JoditEditor from "jodit-react";
 import Navbar from "../components/Navbar";
 import CheckBox from "../tools/checkBox";
 import { json, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../config";
 
 const AddNote = () => {
   const editorRef = useRef(null);
@@ -16,7 +17,7 @@ const AddNote = () => {
 
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("/addNote", {
+    let res = fetch(`${API_BASE_URL}/addNote`, {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },

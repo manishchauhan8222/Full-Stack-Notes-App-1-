@@ -1,56 +1,65 @@
-import React, { useState, useRef, useEffect } from 'react';
-import JoditEditor from 'jodit-react';
-import Navbar from '../components/Navbar';
-import CheckBox from '../tools/checkBox';
-import { json, useNavigate, useParams } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from "react";
+import JoditEditor from "jodit-react";
+import Navbar from "../components/Navbar";
+import CheckBox from "../tools/checkBox";
+import { json, useNavigate, useParams } from "react-router-dom";
 
 const EditNote = () => {
   let { id } = useParams();
   const editorRef = useRef(null);
 
-  const [content, setContent] = useState('');
-  const [title, setTitle] = useState("")
-  const [desc, setDesc] = useState("")
+  const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
   const [isImportant, setIsImportant] = useState(false);
   let navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("http://localhost:8000/updateNote", {
+    let res = fetch("/updateNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: title, description: desc, content: content, isImportant: isImportant, uploadedBy: localStorage.getItem("userID"), noteId: id })
-    }).then(response => response.json()).then(data => {
-      if (data.success) {
-        alert("Note Updated Successfully")
-        navigate("/");
-      }
-      else {
-        alert("Error Adding Note..!")
-      }
+      body: JSON.stringify({
+        title: title,
+        description: desc,
+        content: content,
+        isImportant: isImportant,
+        uploadedBy: localStorage.getItem("userID"),
+        noteId: id,
+      }),
     })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          alert("Note Updated Successfully");
+          navigate("/");
+        } else {
+          alert("Error Adding Note..!");
+        }
+      });
   };
 
   const getNote = () => {
-     let res = fetch("http://localhost:8000/getNote", {
+    let res = fetch("/getNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ noteId: id })
-     }).then(response => response.json()).then(data => {
-      setTitle(data.title);
-      setDesc(data.description);
-      setContent(data.content);
-      setIsImportant(data.isImportant);
-     })
+      body: JSON.stringify({ noteId: id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTitle(data.title);
+        setDesc(data.description);
+        setContent(data.content);
+        setIsImportant(data.isImportant);
+      });
   };
 
   useEffect(() => {
-    getNote()
-  }, [])
-
+    getNote();
+  }, []);
 
   return (
     <>
@@ -60,7 +69,9 @@ const EditNote = () => {
           <h3 className="m-0 p-0 text-2xl mb-5">Edit Note</h3>
 
           <div className="inputBox !block !bg-transparent">
-            <label htmlFor="title" className="my-2">Enter A Note Title</label>
+            <label htmlFor="title" className="my-2">
+              Enter A Note Title
+            </label>
             <input
               type="text"
               placeholder="Note Title"
@@ -68,14 +79,18 @@ const EditNote = () => {
               style={{ border: "2px solid #555" }}
               name="title"
               id="title"
-              onChange={(e) => { setTitle(e.target.value) }}
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
               value={title}
               required
             />
           </div>
 
           <div className="inputBox !block !bg-transparent">
-            <label htmlFor="description" className="my-2">Enter A Note Description</label>
+            <label htmlFor="description" className="my-2">
+              Enter A Note Description
+            </label>
             <textarea
               type="text"
               placeholder="Note Description"
@@ -83,25 +98,32 @@ const EditNote = () => {
               style={{ border: "2px solid #555" }}
               name="description"
               id="description"
-              onChange={(e) => { setDesc(e.target.value) }}
+              onChange={(e) => {
+                setDesc(e.target.value);
+              }}
               value={desc}
               required
             ></textarea>
           </div>
 
-          <CheckBox title="is Important" check={isImportant} setCheck={setIsImportant} />
+          <CheckBox
+            title="is Important"
+            check={isImportant}
+            setCheck={setIsImportant}
+          />
 
           <JoditEditor
             ref={editorRef}
             value={content}
             tabIndex={1} // tabIndex of textarea
-            onChange={newContent => setContent(newContent)}
+            onChange={(newContent) => setContent(newContent)}
           />
 
-          <button className="btnNormal my-3 !min-w-[200px]" type="submit">Update Note</button>
+          <button className="btnNormal my-3 !min-w-[200px]" type="submit">
+            Update Note
+          </button>
         </form>
       </div>
-
     </>
   );
 };

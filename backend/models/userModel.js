@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-mongoose.connect("mongodb://127.0.0.1:27017/noteApp");
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -10,10 +8,8 @@ const userSchema = new mongoose.Schema({
   profilePic: String,
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-mongoose.model('User', userSchema);
-
-module.exports = mongoose.model('User');
+module.exports = mongoose.model("User", userSchema);

@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-mongoose.connect("mongodb://127.0.0.1:27017/noteApp");
+const mongoose = require("mongoose");
 
 const notesSchema = new mongoose.Schema({
   title: String,
@@ -8,12 +6,11 @@ const notesSchema = new mongoose.Schema({
   content: String,
   isImportant: Boolean,
   uploadedBy: String,
-  date:{
+  date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-mongoose.model("Notes", notesSchema);
-
-module.exports = mongoose.model("Notes")
+// Check if model exists, else create it
+module.exports = mongoose.models.Notes || mongoose.model("Notes", notesSchema);

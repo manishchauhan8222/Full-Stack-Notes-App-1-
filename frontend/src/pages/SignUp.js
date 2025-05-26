@@ -42,63 +42,71 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="container bg-[#F4F4F4] flex items-center flex-col justify-center min-h-[100vh]">
-        <form onSubmit={handleSubmit} action="" className="form">
-          <h3 className="text-center text-[26px] mb-5 mt-3">Sign Up</h3>
+      <div className="bg-[#F4F4F4] min-h-screen flex items-center justify-center px-4">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-md bg-white p-6 rounded-lg shadow-md"
+        >
+          <h3 className="text-center text-2xl font-semibold mb-6">Sign Up</h3>
 
-          <div className="inputBox">
+          <div className="mb-4">
             <input
               onChange={(e) => setUsername(e.target.value)}
               value={username}
               type="text"
               placeholder="Username"
               name="username"
-              id="username"
+              className="w-full p-3 border border-gray-300 rounded-lg outline-none focus:border-blue-400"
               required
             />
           </div>
 
-          <div className="inputBox">
+          <div className="mb-4">
             <input
               onChange={(e) => setName(e.target.value)}
               value={name}
               type="text"
               placeholder="Name"
               name="name"
-              id="name"
+              className="w-full p-3 border border-gray-300 rounded-lg outline-none focus:border-blue-400"
               required
             />
           </div>
 
-          <div className="inputBox">
+          <div className="mb-4">
             <input
               onChange={(e) => setEmail(e.target.value)}
               value={email}
               type="email"
               placeholder="Email"
               name="email"
-              id="email"
+              className="w-full p-3 border border-gray-300 rounded-lg outline-none focus:border-blue-400"
               required
             />
           </div>
 
-          <div className="inputBox">
+          <div className="mb-6">
             <input
               type="password"
               onChange={(e) => setPassword(e.target.value)}
               value={password}
               placeholder="Password"
               name="password"
-              id="password"
+              className="w-full p-3 border border-gray-300 rounded-lg outline-none focus:border-blue-400"
               required
             />
           </div>
 
-          <button className="btnBig mt-3 mb-3">Sign Up</button>
+          <button
+            type="submit"
+            className="w-full bg-[#578DF5] text-white py-3 rounded-lg font-medium hover:bg-blue-600 transition"
+          >
+            Sign Up
+          </button>
 
-          <p className="mb-3 mt-2">
-            Already Have An Account{" "}
-            <Link className="text-[#578DF5]" to="/login">
+          <p className="text-center mt-4 text-sm">
+            Already have an account?{" "}
+            <Link className="text-[#578DF5] font-medium" to="/login">
               Login
             </Link>
           </p>

@@ -30,7 +30,7 @@ const Navbar = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, []);
+  }, [getUserDetails]);
 
   return (
     <>

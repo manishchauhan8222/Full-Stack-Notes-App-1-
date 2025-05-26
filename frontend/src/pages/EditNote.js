@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import JoditEditor from "jodit-react";
 import Navbar from "../components/Navbar";
 import CheckBox from "../tools/checkBox";
-import { json, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EditNote = () => {
   let { id } = useParams();
@@ -11,13 +11,13 @@ const EditNote = () => {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-
   const [isImportant, setIsImportant] = useState(false);
+
   let navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
-    let res = fetch("/updateNote", {
+    fetch("/updateNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -41,8 +41,8 @@ const EditNote = () => {
       });
   };
 
-  const getNote = () => {
-    let res = fetch("/getNote", {
+  const getNote = useCallback(() => {
+    fetch("/getNote", {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -55,11 +55,11 @@ const EditNote = () => {
         setContent(data.content);
         setIsImportant(data.isImportant);
       });
-  };
+  }, [id]);
 
   useEffect(() => {
     getNote();
-  }, []);
+  }, [getNote]);
 
   return (
     <>
@@ -79,9 +79,7 @@ const EditNote = () => {
               style={{ border: "2px solid #555" }}
               name="title"
               id="title"
-              onChange={(e) => {
-                setTitle(e.target.value);
-              }}
+              onChange={(e) => setTitle(e.target.value)}
               value={title}
               required
             />
@@ -92,15 +90,12 @@ const EditNote = () => {
               Enter A Note Description
             </label>
             <textarea
-              type="text"
               placeholder="Note Description"
               className="w-full p-2 rounded-md mt-1 min-h-[100px]"
               style={{ border: "2px solid #555" }}
               name="description"
               id="description"
-              onChange={(e) => {
-                setDesc(e.target.value);
-              }}
+              onChange={(e) => setDesc(e.target.value)}
               value={desc}
               required
             ></textarea>
